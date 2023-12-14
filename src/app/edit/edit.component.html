@@ -1,0 +1,58 @@
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-center">Registration Form</h5>
+            <form class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input *ngIf="userToEdit" type="email" class="form-control" id="email" placeholder="Enter email"
+                        [value]="userToEdit.email" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email.
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input *ngIf="userToEdit" type="text" class="form-control" id="firstName"
+                            placeholder="First Name" [value]="userToEdit.firstName" required>
+                        <div class="invalid-feedback">
+                            Please enter a first name.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input *ngIf="userToEdit" type="text" class="form-control" id="lastName" placeholder="Last Name"
+                            [value]="userToEdit.lastName" required>
+                        <div class="invalid-feedback">
+                            Please enter a last name.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input *ngIf="userToEdit" type="password" class="form-control" id="password" placeholder="Password"
+                        value="" required>
+                    <div class="invalid-feedback">
+                        Please enter a password.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-check-label">Roles:</label>
+                    <div class="form-check" *ngFor="let permission of permissions">
+                        <input class="form-check-input" type="checkbox" [value]="permission.id"
+                            [id]="'perm_' + permission.id" (change)="checkButton(permission.id)">
+                        <label class="form-check-label"
+                            [for]="'perm_' + permission.id">{{permission.permission}}</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary d-block mx-auto" type="submit" (click)="updateUser()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
