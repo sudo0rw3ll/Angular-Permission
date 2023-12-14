@@ -15,7 +15,7 @@
             <tr *ngFor="let user of users; let i = index" (click)="onItemSelected(user)">
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
+                <td><a [href]="'mail-to:' + user.email">{{ user.email }}</a></td>
                 <td>
                     <ng-container *ngFor="let permission of user.permissions; let i = index">
                         {{ permission.permission }}

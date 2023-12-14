@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -14,15 +15,27 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    data: {
+      expectedRoles: ['can_read_users', 'can_create_users', 'can_update_users', 'can_read_users', 'admin']
+    }
   },
   {
     path: 'create',
-    component: CreateComponent
+    component: CreateComponent,
+    canActivate: [AuthGuard],
+    data: {
+      expectedRoles: ['can_create_users',]
+    }
   },
   {
     path: 'edit',
-    component: EditComponent
+    canActivate: [AuthGuard],
+    component: EditComponent,
+    data: {
+      expectedRoles: ['can_update_users']
+    }
   }
 ];
 
