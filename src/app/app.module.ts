@@ -9,6 +9,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
+import { VacuumsComponent } from './vacuums/vacuums.component';
+import { TimestampPipe } from './timestamp.pipe';
+import { AddVacuumComponent } from './add-vacuum/add-vacuum.component';
+import { ErrorsComponent } from './errors/errors.component';
+import { ActionPipe } from './action.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +21,12 @@ import { EditComponent } from './edit/edit.component';
     LoginComponent,
     HomeComponent,
     CreateComponent,
-    EditComponent
+    EditComponent,
+    VacuumsComponent,
+    TimestampPipe,
+    AddVacuumComponent,
+    ErrorsComponent,
+    ActionPipe
   ],
   imports: [
     BrowserModule,

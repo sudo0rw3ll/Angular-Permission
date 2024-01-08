@@ -7,6 +7,9 @@ import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { AuthGuard } from './auth.guard';
+import { VacuumsComponent } from './vacuums/vacuums.component';
+import { AddVacuumComponent } from './add-vacuum/add-vacuum.component';
+import { ErrorsComponent } from './errors/errors.component';
 
 const routes: Routes = [
   {
@@ -36,6 +39,18 @@ const routes: Routes = [
     data: {
       expectedRoles: ['can_update_users']
     }
+  },
+  {
+    path: 'vacuum',
+    component: VacuumsComponent
+  },
+  {
+    path: 'add-vacuum',
+    component: AddVacuumComponent
+  },
+  {
+    path: 'errors',
+    component: ErrorsComponent
   }
 ];
 

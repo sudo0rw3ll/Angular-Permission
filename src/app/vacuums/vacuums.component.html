@@ -1,0 +1,189 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left column for form -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Filter Form
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="name" class="mb-1">Name</label>
+                            <input type="text" class="form-control" id="name"
+                                placeholder="Enter vacuum name or substring" (keyup)="setVacuumName($event)">
+                        </div>
+                        <div class="form-group">
+                            <label>Status:</label><br>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" id="stopped" value="STOPPED"
+                                    (change)="checkStatus('STOPPED')">
+                                <label class="form-check-label" for="stopped">Stopped</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" id="running" value="RUNNING"
+                                    (change)="checkStatus('RUNNING')">
+                                <label class="form-check-label" for="running">Running</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" id="discharged" value="DISCHARGED"
+                                    (change)="checkStatus('DISCHARGING')">
+                                <label class="form-check-label" for="discharged">Discharged</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFrom">Date From:</label>
+                            <input type="date" class="form-control" id="dateFrom" (change)="setDateFrom($event)">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateTo">Date To:</label>
+                            <input type="date" class="form-control" id="dateTo" (change)="setDateTo($event)">
+                        </div>
+                        <div class="text-center"> <!-- Center content -->
+                            <button type="submit" class="btn btn-primary"
+                                (click)="fetchVacuumCleaners()">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Vacuum Cleaners
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <!-- Table headers -->
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date Created</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let vacuum of vacuumCleaners; let i = index">
+                                <td>{{vacuum.name}}</td>
+                                <td>{{vacuum.dateCreated | timestamp: 'medium'}}</td>
+                                <td>{{vacuum.status}}</td>
+                                <td><button class="btn btn-warning" (click)="openModal(vacuum.id)">Change
+                                        Status</button></td>
+                                <td><button class="btn btn-danger" (click)="removeVacuum(vacuum.id)">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Scheduled Jobs
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <!-- Table headers -->
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>TimeDate</th>
+                                <th>Vacuum Cleaner ID</th>
+                                <th>Active</th>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let job of vacuumCleanerJobs; let i = index">
+                                <td>{{job.action}}</td>
+                                <td>{{job.time | timestamp: 'medium'}}</td>
+                                <td>{{job.vacuum}}</td>
+                                <td>{{job.is_active}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Job Scheduling
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="name" class="mb-1">CleanerID</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter cleaner id"
+                                (keyup)="setVacuumJobId($event)">
+                        </div>
+                        <div class="form-group">
+                            <label>Action:</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="options" id="startOpt"
+                                    #selectedOptionR value="START">
+                                <label class="form-check-label" for="option1">START</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="options" id="stopOpt"
+                                    #selectedOptionS value="STOP">
+                                <label class="form-check-label" for="option2">STOP</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="options" id="disOpt" #selectedOptionD
+                                    value="DISCHARGE">
+                                <label class="form-check-label" for="option3">DISCHARGE</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateFrom">Date Time:</label>
+                            <input type="datetime-local" class="form-control" id="dateFrom"
+                                (change)="setVacuumJobDate($event)">
+                        </div>
+                        <div class="text-center"> <!-- Center content -->
+                            <button type="submit" class="btn btn-success"
+                                (click)="createVacuumJob(selectedOptionR.checked, selectedOptionS.checked, selectedOptionD.checked)">Schedule</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #content let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Change Vacuum Cleaner Status</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="options" id="option1" #selectedOption1
+                        value="START">
+                    <label class="form-check-label" for="option1">START</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="options" id="option2" #selectedOption2
+                        value="STOP">
+                    <label class="form-check-label" for="option2">STOP</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="options" id="option3" #selectedOption3
+                        value="DISCHARGE">
+                    <label class="form-check-label" for="option3">DISCHARGE</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark"
+                    (click)="changeVacuumState(selectedOption1.checked,selectedOption2.checked,selectedOption3.checked)">CHANGE</button>
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

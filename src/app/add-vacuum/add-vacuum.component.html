@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left column for form -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Filter Form
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="name" class="mb-1">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter vacuum name"
+                                (keyup)="setVacuumName($event)">
+                        </div>
+
+                        <div class="container-fluid">
+                            <button class="btn btn-success" (click)="createVacuumCleaner()">Add vacuum cleaner</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
